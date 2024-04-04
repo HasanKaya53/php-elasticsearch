@@ -43,15 +43,16 @@ http://localhost:8003
 
 <p> Search Command: </p>
 
-    ```bash
-        curl -X GET "localhost:9200/_search" -H 'Content-Type: application/json' -d'
+```bash
+curl -X GET "localhost:9200/_search" -H 'Content-Type: application/json' -d'
         {
             "query": {
                 "match_all": {}
             }
         }
-        
-    ```
+```
+
+
 
 
 
@@ -63,28 +64,30 @@ http://localhost:8003
         "name": "test",
         "description": "test description"
     }
-    ```
+
+```
 
 <p> Update Data Command: </p>
-    
-    ```bash
-    
-curl -X POST https://localhost:9200/index_name/_doc/1 -H 'Content-Type: application/json' -d'
-    {
-        "doc": {
-            "name": "test",
-            "description": "test description"
-        }
-    }
-    
-    ```
+
+
+ ```bash
+     curl -X POST https://localhost:9200/index_name/_doc/1 -H 'Content-Type: application/json' -d'
+            {
+                "doc": {
+                    "name": "test",
+                    "description": "test description"
+                }
+            }
+
+```
 
 
     <p> Create Index Command: </p>
+
+
     
-    ```bash
-    
-    curl -X POST https://localhost:9200/index_name -H 'Content-Type: application/json' -d'
+ ```bash
+        curl -X POST https://localhost:9200/index_name -H 'Content-Type: application/json' -d'
     {
         "mappings": {
             "properties": {
@@ -97,8 +100,10 @@ curl -X POST https://localhost:9200/index_name/_doc/1 -H 'Content-Type: applicat
             }
         }
     }
+
+
+```
     
-    ```
 
 
   
