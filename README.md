@@ -42,9 +42,8 @@ http://localhost:8003
 ## Elastic Search Notes
 
 <p> Search Command: </p>
-    
+
     ```bash
-    
         curl -X GET "localhost:9200/_search" -H 'Content-Type: application/json' -d'
         {
             "query": {
@@ -58,14 +57,12 @@ http://localhost:8003
 
 <p> Insert Data Command: </p>
     
-    ```bash
-    
- curl -X POST https://localhost:9200/index_name/_doc/1 -H 'Content-Type: application/json' -d'
+   ```bash
+     curl -X POST https://localhost:9200/index_name/_doc/1 -H 'Content-Type: application/json' -d'
     {
         "name": "test",
         "description": "test description"
     }
-   
     ```
 
 <p> Update Data Command: </p>
