@@ -1,2 +1,2 @@
 # php-elasticsearch
-Php + ElasticSearch + MongoDB Examples
+Php + ElasticSearch + Kibana + MongoDB  Examples
