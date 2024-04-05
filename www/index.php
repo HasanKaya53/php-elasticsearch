@@ -1,4 +1,2 @@
 <?php
-
-
-echo "its works";
+echo phpinfo();
