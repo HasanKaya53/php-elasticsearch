@@ -2,8 +2,6 @@ version: '3' #docker version
 services:
   db:
     image: mysql:latest
-    # NOTE: use of "mysql_native_password" is not recommended: https://dev.mysql.com/doc/refman/8.0/en/upgrading-from-previous-series.html#upgrade-caching-sha2-password
-    # (this is just an example, not intended to be a production configuration)
     command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     restart: always
     environment:
@@ -12,8 +10,6 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db_data:/var/lib/mysql
-
-
 
   phpmyadmin:
     image: phpmyadmin
@@ -26,14 +22,15 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     depends_on:
       - db
-   
-
+  
   www:
-    image: php:apache
+    image: php:8.2-apache
     volumes:
       - ./www:/var/www/html #bu dizindeki her şeyi /var/www/html dizinine bağla
     ports:
       - "8001:80"
+    command: bash -c "a2enmod rewrite && apache2-foreground" #htaccess dosyalarını çalıştırmak için
+
   mongo:
     image: mongo
     ports:
