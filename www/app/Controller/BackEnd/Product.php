@@ -10,7 +10,12 @@ class Product
 {
    public function index(Request $request, Response $response, $args): Response
    {
-       $response->getBody()->write(json_encode(['message' => 'First Controller!']));
+       //get product model...
+       $productModel = new \App\Model\ProductModel();
+
+       $response->getBody()->write($productModel->listProduct());
+
+       //$response->getBody()->write(json_encode(['message' => 'First Controller!']));
        return $response;
    }
 }
