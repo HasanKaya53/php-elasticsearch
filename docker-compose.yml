@@ -1,4 +1,9 @@
 version: '3' #docker version
+
+
+
+
+
 services:
   db:
     image: mysql:latest
@@ -10,6 +15,8 @@ services:
       MYSQL_ROOT_PASSWORD: root
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - local_net
 
   phpmyadmin:
     image: phpmyadmin
@@ -22,14 +29,10 @@ services:
       - MYSQL_ROOT_PASSWORD=root
     depends_on:
       - db
-  
-  www:
-    image: php:8.2-apache
-    volumes:
-      - ./www:/var/www/html #bu dizindeki her şeyi /var/www/html dizinine bağla
-    ports:
-      - "8001:80"
-    command: bash -c "a2enmod rewrite && apache2-foreground" #htaccess dosyalarını çalıştırmak için
+    networks:
+      - local_net
+
+
 
   mongo:
     image: mongo
@@ -40,7 +43,10 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD = root
     volumes:
       - mongo_data:/data/db # MongoDB verilerini saklamak için bir Docker volume'ı
-    
+    networks:
+      - local_net
+
+
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.16.3
     container_name: elasticsearch
@@ -51,6 +57,8 @@ services:
       - "9300:9300"
     volumes:
       - esdata:/usr/share/elasticsearch/data
+    networks:
+      - local_net
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.16.3
@@ -61,15 +69,38 @@ services:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     depends_on:
       - elasticsearch
+    networks:
+      - local_net
 
- 
-    
+
+
+
+  www:
+    image: php:8.2-apache
+    volumes:
+      - ./www:/var/www/html #bu dizindeki her şeyi /var/www/html dizinine bağla
+    ports:
+      - "8001:80"
+    command: bash -c "a2enmod rewrite && apache2-foreground" #htaccess dosyalarını çalıştırmak için
+    networks:
+      - local_net
+      
+
+
+
+networks:
+  local_net:
+    driver: bridge
 
 
 volumes:
   esdata:
   mongo_data:
   db_data:
+
+
+
+
 
       
 
