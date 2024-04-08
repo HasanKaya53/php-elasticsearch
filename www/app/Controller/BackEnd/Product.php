@@ -30,6 +30,14 @@ class Product
        $responseArray = [];
 
        for($i = 0; $i < $counter; $i++) {
+
+           $start_timestamp = strtotime('-1 week');
+           $end_timestamp = time();
+           $random_timestamp = rand($start_timestamp, $end_timestamp);
+           $created_at = date('c', $random_timestamp);
+
+
+
            $rand_color = $colors[array_rand($colors)];
            $rand_brand = $brands[array_rand($brands)];
            $name = $series[array_rand($series)]." ".rand(1, 1000);
@@ -41,7 +49,8 @@ class Product
                    'brand' => $rand_brand,
                    'price' => rand(1000, 9999),
                    'stock' => rand(0, 100),
-                   'created_at' => date('Y-m-d H:i:s'),
+                   'created_at' => $created_at,
+
                ],
            ];
            $result = $searchLibrary->addData($params);
@@ -50,9 +59,17 @@ class Product
        }
 
 
-       echo "<pre>";
-         print_r($responseArray);
+
+
+            //header..
+       header("refresh:4;url=/");
+            echo "Test data added. You will be redirected after 4 seconds.";
+            echo "<pre>";
+            print_r($responseArray);
             echo "</pre>";
+            //4 second redirect...
+
+
 
 
 

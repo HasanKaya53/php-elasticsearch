@@ -9,6 +9,17 @@
 </head>
 <body>
 
+
+<!-- header -->
+
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/list-all">List All</a></li>
+    <li><a href="/search">Search</a></li>
+</ul>
+
+
+
 <h3>Test Value</h3>
 <form action="/add" method="get">
     <!-- label -->

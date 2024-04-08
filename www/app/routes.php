@@ -22,6 +22,27 @@ return function (App $app) {
         return $view->render($response, 'index.php');
     });
 
+    $app->get('/list-all', function (Request $request, Response $response) {
+        //return view..
+        $view = \Slim\Views\Twig::create(__DIR__.'/../templates');
+
+        $searchLibrary = new \App\Library\ElasticSearchLib();
+
+        $params = [
+            'body' => [
+                'query' => [
+                    'match_all' => new stdClass()
+                ]
+            ]
+        ];
+
+        $data = $searchLibrary->setSize(40)->setSort('created_at','desc')->searchData($params);
+
+
+
+        return $view->render($response, 'list-all.php',['data' => $data]);
+    });
+
     $app->get('/add', ['App\Controller\BackEnd\Product','add'] );
 
 
