@@ -49,9 +49,10 @@ return function (App $app) {
 		//return view..
 		$name = $request->getQueryParams()['name'] ?? null;
 		$type = $request->getQueryParams()['type'] ?? null;
+		$counter = $request->getQueryParams()['counter'] ?? 40;
 
 
-		if(!$name){
+		if(!$name || is_null($name)){
 			$params = [
 				'body' => [
 					'query' => [
@@ -112,7 +113,7 @@ return function (App $app) {
 
 
 		$searchLibrary = new \App\Library\ElasticSearchLib();
-		$data = $searchLibrary->setSize(40)->setSort('created_at','desc')->searchData($params);
+		$data = $searchLibrary->setSize($counter)->setSort('created_at','desc')->searchData($params);
 
 
 

@@ -16,16 +16,22 @@
 <form >
     <!-- label -->
     <label for="name">Search: </label>
-    <input type="text" name="name" id="name" placeholder="Name">
+    <input type="text" name="name" class="searchFormElement" id="name" placeholder="Name">
 
 
     <label for="name">Search Type: </label>
-    <select name="type" id="type">
+    <select name="type" id="type" class="searchFormElement">
         <option value="by_name">Match By Name </option>
         <option value="by_color">Match By Color</option>
         <option value="by_brand">Match By Brand</option>
         <option value="by_all_match">Match By Everything </option>
     </select>
+
+
+
+    <!-- count .. -->
+    <label for="name">number of listings: </label>
+    <input type="text" class="searchFormElement" value="40" name="counter" id="counter" placeholder="Count">
 
 </form>
 
@@ -77,14 +83,15 @@
 
 
 <script>
-    $(document).on('keyup','#name',function(){
-        var name = $(this).val();
+    $(document).on('keyup','.searchFormElement',function(){
+        var name = $("#name").val();
         var type = $('#type').val();
+        var counter = $('#counter').val();
 
         $.ajax({
             url: '/search',
             type: 'GET',
-            data: {name: name, type: type},
+            data: {name: name, type: type, counter: counter},
             success: function(data){
                 let response = JSON.parse(data);
                 console.log(response);
