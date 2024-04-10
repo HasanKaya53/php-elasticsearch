@@ -45,6 +45,43 @@ return function (App $app) {
 
     $app->get('/add', ['App\Controller\BackEnd\Product','add'] );
 
+	$app->get('/search', function (Request $request, Response $response) {
+		//return view..
+		$name = $request->getQueryParams()['name'] ?? null;
+
+
+		if(!$name){
+			$params = [
+				'body' => [
+					'query' => [
+						'match_all' => new stdClass()
+					]
+				]
+			];
+		}else{
+			$params = [
+				'body' => [
+					'query' => [
+						'match' => [
+							'name' => $name
+						]
+					]
+				]
+			];
+		}
+
+
+
+		$searchLibrary = new \App\Library\ElasticSearchLib();
+		$data = $searchLibrary->setSize(40)->setSort('created_at','desc')->searchData($params);
+
+
+
+		$response->getBody()->write(json_encode($data));
+
+		return $response;
+	});
+
 
     //$app->get('/',['App\Controller\BackEnd\Product','index'] );
     //$app->get('/product',['App\Controller\BackEnd\Product','search'] );

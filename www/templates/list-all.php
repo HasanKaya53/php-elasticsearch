@@ -64,3 +64,42 @@
 
 
 </table>
+
+
+<script>
+    $(document).on('keyup','#name',function(){
+        var name = $(this).val();
+
+        $.ajax({
+            url: '/search',
+            type: 'GET',
+            data: {name: name},
+            success: function(data){
+                let response = JSON.parse(data);
+                console.log(response);
+
+                if(response.status){
+                    let html = '';
+                    response.data.forEach(function(item){
+                        html += '<tr>';
+                        html += '<td>'+item._source.name+'</td>';
+                        html += '<td>'+item._source.color+'</td>';
+                        html += '<td>'+item._source.brand+'</td>';
+                        html += '<td>'+item._source.price+'</td>';
+                        html += '<td>'+item._source.stock+'</td>';
+                        html += '<td>'+item._source.created_at+'</td>';
+                        html += '</tr>';
+                    });
+                    $('tbody').html(html);
+                }
+                else{
+                    $('tbody').html('<p>'+response.message+'</p>');
+                }
+
+            }
+        });
+    });
+
+
+
+</script>
