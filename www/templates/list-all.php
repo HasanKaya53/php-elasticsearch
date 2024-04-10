@@ -17,6 +17,16 @@
     <!-- label -->
     <label for="name">Search: </label>
     <input type="text" name="name" id="name" placeholder="Name">
+
+
+    <label for="name">Search Type: </label>
+    <select name="type" id="type">
+        <option value="by_name">Match By Name </option>
+        <option value="by_color">Match By Color</option>
+        <option value="by_brand">Match By Brand</option>
+        <option value="by_all_match">Match By Everything </option>
+    </select>
+
 </form>
 
 
@@ -69,11 +79,12 @@
 <script>
     $(document).on('keyup','#name',function(){
         var name = $(this).val();
+        var type = $('#type').val();
 
         $.ajax({
             url: '/search',
             type: 'GET',
-            data: {name: name},
+            data: {name: name, type: type},
             success: function(data){
                 let response = JSON.parse(data);
                 console.log(response);

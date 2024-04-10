@@ -48,6 +48,7 @@ return function (App $app) {
 	$app->get('/search', function (Request $request, Response $response) {
 		//return view..
 		$name = $request->getQueryParams()['name'] ?? null;
+		$type = $request->getQueryParams()['type'] ?? null;
 
 
 		if(!$name){
@@ -59,15 +60,53 @@ return function (App $app) {
 				]
 			];
 		}else{
-			$params = [
-				'body' => [
-					'query' => [
-						'match' => [
-							'name' => $name
+
+			if($type == "by_name"){
+				//by name..
+				$params = [
+					'body' => [
+						'query' => [
+							'match' => [
+								'name' => $name
+							]
 						]
 					]
-				]
-			];
+				];
+			}else if ($type == "by_color"){
+				//by color..
+				$params = [
+					'body' => [
+						'query' => [
+							'match' => [
+								'color' => $name
+							]
+						]
+					]
+				];
+			}else if ($type == "by_brand"){
+				//by brand..
+				$params = [
+					'body' => [
+						'query' => [
+							'match' => [
+								'brand' => $name
+							]
+						]
+					]
+				];
+			}else if ($type == "by_all_match"){
+				//by all match..
+				$params = [
+					'body' => [
+						'query' => [
+							'multi_match' => [
+								'query' => $name,
+								'fields' => ['name','color','brand']
+							]
+						]
+					]
+				];
+			}
 		}
 
 
