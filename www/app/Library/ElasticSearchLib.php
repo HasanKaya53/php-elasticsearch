@@ -86,7 +86,7 @@ class ElasticSearchLib
         catch (\Exception $e){
            return [
                "status" => 0,
-               "message" => "Veri bulunamadı.",
+               "message" => "No data found.",
            ];
         }
 
@@ -95,12 +95,12 @@ class ElasticSearchLib
         ];
 
         if (isset($response['hits']['total']['value']) && $response['hits']['total']['value'] > 0) {
-            $result['message'] = "Veri bulundu!";
+            $result['message'] = "data found!";
             $result['data'] = $response['hits']['hits'];
         }
         else {
             $result['status'] = false;
-            $result['message'] = "Veri bulunamadı.";
+            $result['message'] = "data not found.";
         }
 
         return $result;

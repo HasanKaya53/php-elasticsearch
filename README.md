@@ -1,4 +1,119 @@
-# php-elasticsearch
+# Php Elasticsearch Example
+
+# ElasticSearch Library İnsallation
+
+```bash
+composer require elasticsearch/elasticsearch
+```
+
+#How To Connect Elasticsearch
+
+```php
+
+
+require 'vendor/autoload.php';
+
+use Elastic\Elasticsearch\ClientBuilder;
+
+$client = ClientBuilder::create()->setHosts(['elasticsearch:9200'])->build(); // elasticsearch:9200 is docker container name
+
+```
+
+
+
+# How To Install Data In Elasticsearch
+
+```php
+
+$params = [
+    'index' => 'your_index_name',
+    'id'    => 'my_id',
+    'body'  => ['testField' => 'abc']
+];
+
+$response = $client->index($params);
+print_r($response);
+
+```
+
+# How To Get Data In Elasticsearch
+
+```php
+
+
+$params = [
+        'index' => 'your_index_name',
+        'body' => [
+            'query' => [
+                'match' => [
+                    'color' => 'red'
+                ]
+            ]
+        ]
+];
+
+$response = $client->search($params);
+
+if (isset($response['hits']['total']['value']) && $response['hits']['total']['value'] > 0) {
+    $result['message'] = "data found!";
+    $result['data'] = $response['hits']['hits'];
+}
+else {
+    $result['status'] = false;
+    $result['message'] = "data not found.";
+}
+
+print_r($result);
+
+```
+
+# How to get multiple data in Elasticsearch
+
+```php
+
+$params = [
+    'index' => 'your_index_name',
+    'body' => [
+        'query' => [
+            'multi_match' => [
+                'query' => 'red',
+                'fields' => ['name','color','brand']
+            ]
+        ]
+    ]
+];
+
+$response = $client->search($params);
+
+if (isset($response['hits']['total']['value']) && $response['hits']['total']['value'] > 0) {
+    $result['message'] = "data found!";
+    $result['data'] = $response['hits']['hits'];
+}
+else {
+    $result['status'] = false;
+    $result['message'] = "data not found.";
+}
+
+print_r($result);
+
+```
+
+
+# How To Update Data In Elasticsearch
+
+```php
+
+# Update data
+
+```
+				
+
+
+
+
+
+
+# Install Docker Compose And Elasticsearch
 
 <p> This is a simple PHP example of elasticsearch. It includes the following with docker configuration. </p>
 

@@ -82,41 +82,6 @@ class Product
    }
 
 
-   public function search(Request $request, Response $response, $args): Response
-   {
-
-       $searchLibrary = new \App\Library\ElasticSearchLib();
-       $result = $searchLibrary->searchData();
-
-       echo "<pre>";
-         print_r($result);
-            echo "</pre>";
-
-
-            $result2 = $searchLibrary->searchData(
-
-                [ 'body' => [
-                'query' => [
-                    'match' => [
-                        'name' => 'Mİ'
-
-                    ]
-                ]
-            ]]);
-
-            echo "<pre>";
-            print_r($result2);
-            echo "</pre>";
-
-
-            return $response;
-
-
-
-
-   }
-
-
 
 
 }
